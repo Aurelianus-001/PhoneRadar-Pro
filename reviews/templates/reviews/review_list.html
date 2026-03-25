@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+<head>
+    <title>PhoneRadar Pro - 手机测评专业站</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; line-height: 1.6; color: #333; }
+        .review-card { border-bottom: 1px solid #eee; padding: 20px 0; }
+        h1 { color: #2c3e50; }
+        .tag { background: #e74c3c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; }
+    </style>
+</head>
+<body>
+    <h1>Latest Phone Reviews</h1>
+    <hr>
+    {% for review in reviews %}
+        <div class="review-card">
+            <h2><a href="{% url 'review_detail' review.slug %}">{{ review.title }}</a></h2>
+            <p>评分: <span class="tag">{{ review.rating }}/5</span> | 发布于: {{ review.created_at|date:"Y-m-d" }}</p>
+            <p>{{ review.content|truncatewords:30 }}</p>
+        </div>
+    {% empty %}
+        <p>目前还没有测评，快去后台发一篇吧！</p>
+    {% endfor %}
+</body>
+</html>
