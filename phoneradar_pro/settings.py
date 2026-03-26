@@ -25,7 +25,12 @@ SECRET_KEY = 'django-insecure-7%v9px$buqj4@7!bdq5pz!o%e7!2r3y^3y!h_)93o4%f$)^c-3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    'phone-radar-pro.aurelianus.online',  # 你的新子域名
+    'phone-radar-pro.vercel.app',         # Vercel 赠送的二级域名
+    '.vercel.app',                        # 允许所有 vercel 子域名（可选）
+    '127.0.0.1',
+    'localhost',]
 
 
 # Application definition
