@@ -1,14 +1,35 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Review
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Review, Comment  # 记得导入 Comment
 
-# 首页视图：展示所有测评文章
+
+# 1. 首页视图
 def review_list(request):
-    # 从数据库拿走所有的测评文章，按时间倒序排（最新的在前面）
     reviews = Review.objects.all().order_by('-created_at')
     return render(request, 'reviews/review_list.html', {'reviews': reviews})
 
-# 详情页视图：点开某一篇测评看全文
+
+# 2. 详情页视图 (增加处理评论逻辑)
 def review_detail(request, slug):
-    # 根据那个唯一的 slug 找到那篇文章，找不到就报 404 错误
     review = get_object_or_404(Review, slug=slug)
+
+    # 如果用户提交了评论表单 (POST请求)
+    if request.method == "POST":
+        user_name = request.POST.get('user_name', '匿名网友')
+        text = request.POST.get('text')
+        if text:
+            Comment.objects.create(review=review, user_name=user_name, text=text)
+            return redirect('review_detail', slug=slug)  # 提交后刷新本页
+
     return render(request, 'reviews/review_detail.html', {'review': review})
+
+
+# 3. [新增] 处理点赞和踩的视图
+def review_vote(request, slug, vote_type):
+    review = get_object_or_404(Review, slug=slug)
+    if vote_type == 'like':
+        review.likes += 1
+    elif vote_type == 'dislike':
+        review.dislikes += 1
+    review.save()
+    # 投票后跳回原来的详情页
+    return redirect('review_detail', slug=slug)
