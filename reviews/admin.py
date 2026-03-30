@@ -38,13 +38,10 @@ class ReviewAdmin(admin.ModelAdmin):
 # 4. [新增] 评论管理界面
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    # 显示谁在什么时候评论了哪篇文章
     list_display = ('user_name', 'review', 'created_at', 'text_summary')
     list_filter = ('created_at',)
     search_fields = ('user_name', 'text', 'review__title')
 
-    # 定义一个显示函数，防止评论太长撑破表格
     def text_summary(self, obj):
         return obj.text[:30] + '...' if len(obj.text) > 30 else obj.text
-
-    text_summary.short_description = "评论内容摘要"
+    text_summary.short_description = "Content Summary"

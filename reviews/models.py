@@ -2,51 +2,51 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
-# 1. 手机品牌表
+
 class Brand(models.Model):
-    name = models.CharField("品牌名称", max_length=50, unique=True)
-    origin = models.CharField("所属国家", max_length=50)
-    logo_url = models.URLField("Logo链接", blank=True, help_text="可以填一个网上的图片地址")
+    name = models.CharField("Brand Name", max_length=50, unique=True)
+    origin = models.CharField("Country", max_length=50)
+    logo_url = models.URLField("Logo URL", blank=True)
 
     class Meta:
-        verbose_name = "品牌"
-        verbose_name_plural = "品牌管理"
+        verbose_name = "Brand"
+        verbose_name_plural = "Brands"
 
     def __str__(self):
         return self.name
 
-# 2. 手机型号表
+
 class PhoneModel(models.Model):
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='models', verbose_name="所属品牌")
-    name = models.CharField("型号名称", max_length=100)
-    launch_date = models.DateField("发布日期")
-    os_type = models.CharField("操作系统", max_length=50,
-                               choices=[('iOS', 'iOS'), ('Android', 'Android'), ('Others', '其他')])
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, related_name='models', verbose_name="Brand")
+    name = models.CharField("Model Name", max_length=100)
+    launch_date = models.DateField("Launch Date")
+    os_type = models.CharField("OS", max_length=50,
+                               choices=[('iOS', 'iOS'), ('Android', 'Android'), ('Others', 'Others')])
 
     class Meta:
-        verbose_name = "手机型号"
-        verbose_name_plural = "手机型号管理"
+        verbose_name = "Phone Model"
+        verbose_name_plural = "Phone Models"
 
     def __str__(self):
         return f"{self.brand.name} {self.name}"
 
-# 3. 核心：测评文章表
-class Review(models.Model):
-    title = models.CharField("测评标题", max_length=200)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
-    phones = models.ManyToManyField(PhoneModel, related_name='reviews', verbose_name="关联手机")
-    content = models.TextField("正文内容")
-    rating = models.PositiveIntegerField("评分(1-5)", default=5)
-    created_at = models.DateTimeField("发布时间", auto_now_add=True)
-    slug = models.SlugField("URL别名", unique=True, blank=True, max_length=250)
 
-    # --- [NEW] 点赞和踩的功能字段 ---
-    likes = models.PositiveIntegerField("点赞数", default=0)
-    dislikes = models.PositiveIntegerField("踩数", default=0)
+class Review(models.Model):
+    title = models.CharField("Title", max_length=200)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Author")
+    phones = models.ManyToManyField(PhoneModel, related_name='reviews', verbose_name="Related Phones")
+    content = models.TextField("Content")
+    rating = models.PositiveIntegerField("Rating(1-5)", default=5)
+    created_at = models.DateTimeField("Published At", auto_now_add=True)
+    slug = models.SlugField("URL Slug", unique=True, blank=True, max_length=250)
+
+    # Voting Fields
+    likes = models.PositiveIntegerField("Likes", default=0)
+    dislikes = models.PositiveIntegerField("Dislikes", default=0)
 
     class Meta:
-        verbose_name = "手机测评"
-        verbose_name_plural = "测评文章管理"
+        verbose_name = "Review"
+        verbose_name_plural = "Reviews"
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -56,18 +56,14 @@ class Review(models.Model):
     def __str__(self):
         return self.title
 
-# --- [NEW] 4. 评论表 ---
+
 class Comment(models.Model):
-    # 关联到测评文章，一篇文章可以有多个评论
-    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='comments', verbose_name="所属测评")
-    user_name = models.CharField("用户昵称", max_length=50, default="匿名网友")
-    text = models.TextField("评论内容")
-    created_at = models.DateTimeField("评论时间", auto_now_add=True)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='comments', verbose_name="Review")
+    user_name = models.CharField("Username", max_length=50, default="Anonymous")
+    text = models.TextField("Comment")
+    created_at = models.DateTimeField("Posted At", auto_now_add=True)
 
     class Meta:
-        verbose_name = "评论"
-        verbose_name_plural = "评论管理"
-        ordering = ['-created_at'] # 最新的评论在最上面
-
-    def __str__(self):
-        return f"{self.user_name} 评论了 {self.review.title}"
+        verbose_name = "Comment"
+        verbose_name_plural = "Comments"
+        ordering = ['-created_at']

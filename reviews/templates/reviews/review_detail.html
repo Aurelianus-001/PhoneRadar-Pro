@@ -1,35 +1,44 @@
 <!DOCTYPE html>
-<html lang="zh-hans">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ review.title }} - 手机评测雷达</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ review.title }} - Phone Radar Pro</title>
     <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; color: #333; }
-        h1 { border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .meta { color: #888; font-size: 0.9em; }
-        .content { margin-top: 20px; font-size: 1.1em; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; color: #333; }
+        h1 { border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; margin-bottom: 5px; }
+        .meta { color: #888; font-size: 0.9em; margin-bottom: 20px; }
+        .content { margin-top: 20px; font-size: 1.1em; white-space: pre-line; }
 
-        /* [NEW] 投票按钮样式 */
-        .vote-actions { margin: 30px 0; display: flex; gap: 10px; }
-        .vote-btn { padding: 10px 20px; border: 1px solid #ddd; border-radius: 5px; background: white; cursor: pointer; text-decoration: none; color: #333; transition: background 0.2s; }
-        .vote-btn:hover { background: #f5f5f5; }
+        /* Voting Section */
+        .vote-actions { margin: 30px 0; display: flex; gap: 12px; }
+        .vote-btn { padding: 10px 18px; border: 1px solid #ddd; border-radius: 6px; background: #fff; cursor: pointer; text-decoration: none; color: #333; font-weight: 500; transition: all 0.2s ease; display: flex; align-items: center; gap: 5px; }
+        .vote-btn:hover { background: #f8f9fa; border-color: #bbb; transform: translateY(-1px); }
 
-        /* [NEW] 评论区样式 */
-        .comment-area { margin-top: 40px; border-top: 2px solid #eee; padding-top: 20px; }
-        .comment-item { border-bottom: 1px solid #eee; padding: 15px 0; }
-        .comment-meta { color: #888; font-size: 0.9em; margin-bottom: 5px; }
-        .comment-form input, .comment-form textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
-        .comment-form textarea { height: 100px; resize: vertical; }
-        .comment-form button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        /* Comment Section */
+        .comment-area { margin-top: 40px; border-top: 2px solid #f0f0f0; padding-top: 30px; }
+        .comment-item { border-bottom: 1px solid #f9f9f9; padding: 15px 0; }
+        .comment-meta { color: #666; font-size: 0.85em; margin-bottom: 8px; }
+        .comment-meta strong { color: #222; }
+        .comment-text { color: #444; }
+
+        .comment-form { background: #fcfcfc; padding: 20px; border-radius: 8px; border: 1px solid #eee; margin-top: 30px; }
+        .comment-form h4 { margin-top: 0; }
+        .comment-form input, .comment-form textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .comment-form textarea { height: 120px; resize: vertical; }
+        .comment-form button { padding: 12px 24px; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
         .comment-form button:hover { background-color: #0056b3; }
+
+        .back-link { display: inline-block; margin-top: 20px; color: #007bff; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
     <h1>{{ review.title }}</h1>
     <p class="meta">
-        作者：{{ review.author.username }} |
-        发布时间：{{ review.created_at|date:"Y-m-d H:i" }} |
-        评分：{{ review.rating }} / 5
+        By {{ review.author.username }} |
+        Published: {{ review.created_at|date:"M d, Y" }} |
+        Rating: {{ review.rating }} / 5
     </p>
 
     <div class="content">
@@ -38,39 +47,38 @@
 
     <div class="vote-actions">
         <a href="{% url 'review_vote' review.slug 'like' %}" class="vote-btn">
-            👍 点赞 ({{ review.likes }})
+            👍 Like ({{ review.likes }})
         </a>
         <a href="{% url 'review_vote' review.slug 'dislike' %}" class="vote-btn">
-            👎 踩 ({{ review.dislikes }})
+            👎 Dislike ({{ review.dislikes }})
         </a>
     </div>
 
-    <br>
-    <a href="{% url 'review_list' %}" style="text-decoration:none;">← 返回测评列表</a>
+    <a href="{% url 'review_list' %}" class="back-link">← Back to Review List</a>
 
     <div class="comment-area">
-        <h3>用户评论</h3>
+        <h3>User Comments</h3>
 
         {% for comment in review.comments.all %}
             <div class="comment-item">
                 <div class="comment-meta">
-                    <strong>{{ comment.user_name }}</strong> &bull; {{ comment.created_at|date:"Y-m-d H:i" }}
+                    <strong>{{ comment.user_name }}</strong> &bull; {{ comment.created_at|date:"M d, Y H:i" }}
                 </div>
                 <div class="comment-text">
                     {{ comment.text|linebreaksbr }}
                 </div>
             </div>
         {% empty %}
-            <p>暂无评论，快来抢沙发！</p>
+            <p style="color: #999;">No comments yet. Be the first to share your thoughts!</p>
         {% endfor %}
 
         <div class="comment-form">
-            <h4>发表你的看法</h4>
+            <h4>Leave a Comment</h4>
             <form method="post" action="{% url 'review_detail' review.slug %}">
                 {% csrf_token %}
-                <input type="text" name="user_name" placeholder="你的昵称 (默认为匿名网友)">
-                <textarea name="text" placeholder="写下你的评论... (必填)" required></textarea>
-                <button type="submit">提交评论</button>
+                <input type="text" name="user_name" placeholder="Your Nickname (Optional)">
+                <textarea name="text" placeholder="Share your thoughts here... (Required)" required></textarea>
+                <button type="submit">Post Comment</button>
             </form>
         </div>
     </div>
