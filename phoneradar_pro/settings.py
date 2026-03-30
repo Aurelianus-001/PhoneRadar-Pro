@@ -85,15 +85,16 @@ import os
 import dj_database_url
 from dotenv import load_dotenv
 
-# 这行代码会去寻找刚才那个 .env 文件
+# 加载本地 .env
 load_dotenv()
 
 DATABASES = {
     'default': dj_database_url.config(
-        # 如果找不到 DATABASE_URL，就用本地本地 sqlite
-        default=os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3'),
+        # 逻辑：优先读环境变量 DATABASE_URL（本地从 .env 读，线上由 Vercel 提供）
+        # 如果都没有（比如还没配环境），才降级使用本地 sqlite
+        default=os.getenv('DATABASE_URL', 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')),
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=True if os.getenv('DATABASE_URL') else False
     )
 }
 
