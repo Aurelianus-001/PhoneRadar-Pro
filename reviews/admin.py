@@ -1,34 +1,50 @@
 from django.contrib import admin
-from .models import Brand, PhoneModel, Review
+from .models import Brand, PhoneModel, Review, Comment  # 确保导入了 Comment
+
 
 # 1. 品牌管理界面
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    # 列表页显示哪些字段
     list_display = ('name', 'origin', 'logo_url')
-    # 增加搜索功能（按名称搜）
     search_fields = ('name',)
+
 
 # 2. 手机型号管理界面
 @admin.register(PhoneModel)
 class PhoneModelAdmin(admin.ModelAdmin):
-    # 列表页显示品牌、型号和发布日期
     list_display = ('name', 'brand', 'launch_date', 'os_type')
-    # 右侧增加快捷过滤器（按品牌和系统过滤）
     list_filter = ('brand', 'os_type')
-    # 增加搜索功能（按型号名搜）
     search_fields = ('name',)
+
 
 # 3. 测评文章管理界面
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    # 列表页显示标题、作者、评分和时间
-    list_display = ('title', 'author', 'rating', 'created_at')
-    # 右侧增加过滤器（按评分和时间过滤）
+    # [增加] 在后台列表页直接看到点赞和踩的数量
+    list_display = ('title', 'author', 'rating', 'likes', 'dislikes', 'created_at')
     list_filter = ('rating', 'created_at')
-    # 增加搜索功能（搜标题和内容）
     search_fields = ('title', 'content')
-    # 核心高级功能：当你输入标题时，URL别名(Slug)会自动跟着生成
     prepopulated_fields = {'slug': ('title',)}
-    # 横向筛选器：在多对多选择手机时，体验更好
     filter_horizontal = ('phones',)
+
+    # [高级功能] 在查看文章时，直接在下方列出该文章的所有评论，方便快速删除差评
+    class CommentInline(admin.TabularInline):
+        model = Comment
+        extra = 0  # 默认不额外增加空白行
+
+    inlines = [CommentInline]
+
+
+# 4. [新增] 评论管理界面
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    # 显示谁在什么时候评论了哪篇文章
+    list_display = ('user_name', 'review', 'created_at', 'text_summary')
+    list_filter = ('created_at',)
+    search_fields = ('user_name', 'text', 'review__title')
+
+    # 定义一个显示函数，防止评论太长撑破表格
+    def text_summary(self, obj):
+        return obj.text[:30] + '...' if len(obj.text) > 30 else obj.text
+
+    text_summary.short_description = "评论内容摘要"

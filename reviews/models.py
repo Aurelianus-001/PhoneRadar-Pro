@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
-
 # 1. 手机品牌表
 class Brand(models.Model):
     name = models.CharField("品牌名称", max_length=50, unique=True)
@@ -15,7 +14,6 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
-
 
 # 2. 手机型号表
 class PhoneModel(models.Model):
@@ -32,25 +30,24 @@ class PhoneModel(models.Model):
     def __str__(self):
         return f"{self.brand.name} {self.name}"
 
-
 # 3. 核心：测评文章表
 class Review(models.Model):
     title = models.CharField("测评标题", max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="作者")
-    # 多对多：一篇文章可以评测多个手机（比如对比评测）
     phones = models.ManyToManyField(PhoneModel, related_name='reviews', verbose_name="关联手机")
     content = models.TextField("正文内容")
     rating = models.PositiveIntegerField("评分(1-5)", default=5)
     created_at = models.DateTimeField("发布时间", auto_now_add=True)
-
-    # 开源级功能：Slug 用于生成漂亮的 URL，如 /review/iphone-15-pro-vs-s24
     slug = models.SlugField("URL别名", unique=True, blank=True, max_length=250)
+
+    # --- [NEW] 点赞和踩的功能字段 ---
+    likes = models.PositiveIntegerField("点赞数", default=0)
+    dislikes = models.PositiveIntegerField("踩数", default=0)
 
     class Meta:
         verbose_name = "手机测评"
         verbose_name_plural = "测评文章管理"
 
-    # 自动生成 Slug 的逻辑
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
@@ -58,3 +55,19 @@ class Review(models.Model):
 
     def __str__(self):
         return self.title
+
+# --- [NEW] 4. 评论表 ---
+class Comment(models.Model):
+    # 关联到测评文章，一篇文章可以有多个评论
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='comments', verbose_name="所属测评")
+    user_name = models.CharField("用户昵称", max_length=50, default="匿名网友")
+    text = models.TextField("评论内容")
+    created_at = models.DateTimeField("评论时间", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "评论"
+        verbose_name_plural = "评论管理"
+        ordering = ['-created_at'] # 最新的评论在最上面
+
+    def __str__(self):
+        return f"{self.user_name} 评论了 {self.review.title}"
