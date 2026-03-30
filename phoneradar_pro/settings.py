@@ -81,14 +81,19 @@ WSGI_APPLICATION = 'phoneradar_pro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-import dj_database_url
 import os
+import dj_database_url
+from dotenv import load_dotenv
 
-# 如果环境变量里有 DATABASE_URL 就连云端，否则连本地 SQLite
+# 这行代码会去寻找刚才那个 .env 文件
+load_dotenv()
+
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'),
-        conn_max_age=600
+        # 如果找不到 DATABASE_URL，就用本地本地 sqlite
+        default=os.getenv('DATABASE_URL', 'sqlite:///db.sqlite3'),
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 

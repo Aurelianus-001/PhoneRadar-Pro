@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ review.title }} - 手机评测雷达</title>
+</head>
+<body>
+    <h1>{{ review.title }}</h1>
+    <p>发布时间：{{ review.created_at }}</p>
+    <hr>
+    <div>
+        {{ review.content|linebreaks }}
+    </div>
+    <br>
+    <a href="{% url 'review_list' %}">← 返回测评列表</a>
+</body>
+</html>
