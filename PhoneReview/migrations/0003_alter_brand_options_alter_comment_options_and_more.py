@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('reviews', '0002_review_dislikes_review_likes_comment'),
+        ('PhoneReview', '0002_review_dislikes_review_likes_comment'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='comment',
             name='review',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='reviews.review', verbose_name='Review'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='PhoneReview.review', verbose_name='Review'),
         ),
         migrations.AlterField(
             model_name='comment',
@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='phonemodel',
             name='brand',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='models', to='reviews.brand', verbose_name='Brand'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='models', to='PhoneReview.brand', verbose_name='Brand'),
         ),
         migrations.AlterField(
             model_name='phonemodel',
@@ -112,7 +112,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='review',
             name='phones',
-            field=models.ManyToManyField(related_name='reviews', to='reviews.phonemodel', verbose_name='Related Phones'),
+            field=models.ManyToManyField(related_name='PhoneReview', to='PhoneReview.phonemodel', verbose_name='Related Phones'),
         ),
         migrations.AlterField(
             model_name='review',

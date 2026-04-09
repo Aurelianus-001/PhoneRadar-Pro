@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100, verbose_name='型号名称')),
                 ('launch_date', models.DateField(verbose_name='发布日期')),
                 ('os_type', models.CharField(choices=[('iOS', 'iOS'), ('Android', 'Android'), ('Others', '其他')], max_length=50, verbose_name='操作系统')),
-                ('brand', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='models', to='reviews.brand', verbose_name='所属品牌')),
+                ('brand', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='models', to='PhoneReview.brand', verbose_name='所属品牌')),
             ],
             options={
                 'verbose_name': '手机型号',
@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='发布时间')),
                 ('slug', models.SlugField(blank=True, max_length=250, unique=True, verbose_name='URL别名')),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='作者')),
-                ('phones', models.ManyToManyField(related_name='reviews', to='reviews.phonemodel', verbose_name='关联手机')),
+                ('phones', models.ManyToManyField(related_name='PhoneReview', to='PhoneReview.phonemodel', verbose_name='关联手机')),
             ],
             options={
                 'verbose_name': '手机测评',

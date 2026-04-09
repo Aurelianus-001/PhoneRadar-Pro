@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'reviews', # 你的业务 App
+    'PhoneReview', # 你的业务 App
 ]
 
 MIDDLEWARE = [
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'phoneradar_pro.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')], # 允许在根目录下创建通用的 templates 文件夹
+        'DIRS': [BASE_DIR / 'templates'], # 使用自建的登录页面
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

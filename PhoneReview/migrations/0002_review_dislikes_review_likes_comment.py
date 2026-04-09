@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('reviews', '0001_initial'),
+        ('PhoneReview', '0001_initial'),
     ]
 
     operations = [
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
                 ('user_name', models.CharField(default='匿名网友', max_length=50, verbose_name='用户昵称')),
                 ('text', models.TextField(verbose_name='评论内容')),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='评论时间')),
-                ('review', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='reviews.review', verbose_name='所属测评')),
+                ('review', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='PhoneReview.review', verbose_name='所属测评')),
             ],
             options={
                 'verbose_name': '评论',

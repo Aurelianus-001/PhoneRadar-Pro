@@ -1,0 +1,5 @@
+from django.apps import AppConfig
+
+class PhonereviewConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'PhoneReview' # 这里必须是 PhoneReview

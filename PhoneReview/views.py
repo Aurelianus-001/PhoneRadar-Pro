@@ -7,7 +7,7 @@ from .models import Review, Comment
 class ReviewListView(generic.ListView):
     model = Review
     template_name = 'reviews/review_list.html'
-    context_object_name = 'reviews'
+    context_object_name = 'PhoneReview'
     # 这里的 queryset 替代了原来的 Review.objects.all().order_by(...)
     queryset = Review.objects.all().order_by('-created_at')
 

@@ -1,0 +1,11 @@
+{% extends "admin/login.html" %}
+
+{% block content %}
+<div style="background-color: #e1f5fe; color: #01579b; padding: 12px; border: 1px solid #b3e5fc; border-radius: 4px; margin-bottom: 20px; text-align: center; font-family: sans-serif;">
+    <strong>🔑 演示账号提示</strong><br>
+    账号：<code style="background: #fff; padding: 2px 5px;">admin</code> |
+    密码：<code style="background: #fff; padding: 2px 5px;">woc7014admin</code>
+</div>
+
+{{ block.super }}
+{% endblock %}
