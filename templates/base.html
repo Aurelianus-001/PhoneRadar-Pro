@@ -9,9 +9,9 @@
 </head>
 <body>
     <div class="container">
-        <header style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;">
-            <div style="display: flex; align-items: center;">
-                <img src="{% static 'images/logo.png' %}" alt="PhoneRadar Logo" height="50" style="margin-right: 15px;">
+        <header class="site-header">
+            <div class="logo-area">
+                <img src="{% static 'images/logo.png' %}" alt="PhoneRadar Logo">
                 <h1>📱 PhoneRadar 手机雷达</h1>
             </div>
             <nav>
@@ -22,7 +22,7 @@
                     <span>欢迎，{{ user.username }}！</span>
                     <form method="post" action="{% url 'logout' %}" style="display:inline;">
                         {% csrf_token %}
-                        <button type="submit" style="background:none; border:none; color:blue; cursor:pointer;">🚪 登出</button>
+                        <button type="submit">🚪 登出</button>
                     </form>
                 {% else %}
                     <a href="{% url 'login' %}">🔐 登录</a>

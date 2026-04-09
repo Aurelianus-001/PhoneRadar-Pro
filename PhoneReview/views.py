@@ -19,7 +19,7 @@ class ReviewListView(generic.ListView):
 class ReviewDetailView(generic.DetailView):
     model = Review
     template_name = 'reviews/review_detail.html'
-    context_object_name = 'review'
+    context_object_name = 'review_detail.html'
 
     def post(self, request, *args, **kwargs):
         review = self.get_object()

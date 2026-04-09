@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
                 ('user_name', models.CharField(default='Anonymous', max_length=50, verbose_name='Username')),
                 ('text', models.TextField(verbose_name='Comment')),
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Posted At')),
-                ('review', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='PhoneReview.review', verbose_name='Review')),
+                ('review_detail.html', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='PhoneReview.review_detail.html', verbose_name='Review')),
             ],
             options={
                 'verbose_name': 'Comment',

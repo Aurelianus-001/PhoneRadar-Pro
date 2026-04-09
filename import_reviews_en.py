@@ -10,7 +10,7 @@ from PhoneReview.models import Brand, PhoneModel, Review
 # ---------- 1. 默认用户 ----------
 author, created = User.objects.get_or_create(
     username='review_author',
-    defaults={'email': 'review@example.com'}
+    defaults={'email': 'review_detail.html@example.com'}
 )
 if created:
     author.set_password('123456')
@@ -201,7 +201,7 @@ for rev_data in reviews_data:
         # 设置多对多关系
         review.phone_models.set(related_models)
         review.save()
-        print(f"Added review: {title}")
+        print(f"Added review_detail.html: {title}")
     else:
         print(f"Review already exists: {title}")
 
