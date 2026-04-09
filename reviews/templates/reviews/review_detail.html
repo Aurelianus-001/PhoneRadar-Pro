@@ -1,4 +1,5 @@
-{% load static %} <!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,54 +8,60 @@
     <link rel="stylesheet" href="{% static 'reviews/css/style.css' %}">
 </head>
 <body>
-    <img src="{% static 'reviews/images/logo.png' %}" alt="Logo" width="50">
+    <div class="container">
+        <div class="logo-wrapper">
+            <a href="{% url 'review_list' %}">
+                <img src="{% static 'reviews/images/logo.png' %}" alt="Phone Radar Pro Logo" width="100">
+            </a>
+        </div>
 
-    <h1>{{ review.title }}</h1>
-    <p class="meta">
-        By {{ review.author.username }} |
-        Published: {{ review.created_at|date:"M d, Y" }} |
-        Rating: {{ review.rating }} / 5
-    </p>
+        <h1>{{ review.title }}</h1>
+        <p class="meta">
+            By <strong>{{ review.author.username }}</strong> |
+            Published: {{ review.created_at|date:"M d, Y" }} |
+            Rating: <span style="color: #f39c12;">★ {{ review.rating }} / 5</span>
+        </p>
 
-    <div class="content">
-        {{ review.content|linebreaks }}
-    </div>
+        <div class="content">
+            {{ review.content|linebreaks }}
+        </div>
 
-    <div class="vote-actions">
-        <a href="{% url 'review_vote' review.slug 'like' %}" class="vote-btn">
-            👍 Like ({{ review.likes }})
-        </a>
-        <a href="{% url 'review_vote' review.slug 'dislike' %}" class="vote-btn">
-            👎 Dislike ({{ review.dislikes }})
-        </a>
-    </div>
+        <div class="vote-actions">
+            <a href="{% url 'review_vote' review.slug 'like' %}" class="vote-btn">
+                👍 Like ({{ review.likes }})
+            </a>
+            <a href="{% url 'review_vote' review.slug 'dislike' %}" class="vote-btn">
+                👎 Dislike ({{ review.dislikes }})
+            </a>
+        </div>
 
-    <a href="{% url 'review_list' %}" class="back-link">← Back to Review List</a>
+        <a href="{% url 'review_list' %}" class="back-link">← Back to Review List</a>
 
-    <div class="comment-area">
-        <h3>User Comments</h3>
+        <div class="comment-area">
+            <h3>User Comments ({{ review.comments.count }})</h3>
 
-        {% for comment in review.comments.all %}
-            <div class="comment-item">
-                <div class="comment-meta">
-                    <strong>{{ comment.user_name }}</strong> &bull; {{ comment.created_at|date:"M d, Y H:i" }}
+            {% for comment in review.comments.all %}
+                <div class="comment-item">
+                    <div class="comment-meta">
+                        <strong>{{ comment.user_name }}</strong> &bull; {{ comment.created_at|date:"M d, Y H:i" }}
+                    </div>
+                    <div class="comment-text">
+                        {{ comment.text|linebreaksbr }}
+                    </div>
                 </div>
-                <div class="comment-text">
-                    {{ comment.text|linebreaksbr }}
-                </div>
+            {% empty %}
+                <p style="color: #999;">No comments yet. Be the first to share your thoughts!</p>
+            {% endfor %}
+
+            <div class="comment-form">
+                <h4>Leave a Comment</h4>
+                <form method="post" action="{% url 'review_detail' review.slug %}">
+                    {% csrf_token %}
+                    <input type="text" name="user_name" placeholder="Your Nickname (Optional)">
+                    <textarea name="text" placeholder="Share your thoughts here... (Required)" required></textarea>
+                    <button type="submit">Post Comment</button>
+                </form>
             </div>
-        {% empty %}
-            <p style="color: #999;">No comments yet. Be the first to share your thoughts!</p>
-        {% endfor %}
-
-        <div class="comment-form">
-            <h4>Leave a Comment</h4>
-            <form method="post" action="{% url 'review_detail' review.slug %}">
-                {% csrf_token %}
-                <input type="text" name="user_name" placeholder="Your Nickname (Optional)">
-                <textarea name="text" placeholder="Share your thoughts here... (Required)" required></textarea>
-                <button type="submit">Post Comment</button>
-            </form>
         </div>
     </div>
 </body>
