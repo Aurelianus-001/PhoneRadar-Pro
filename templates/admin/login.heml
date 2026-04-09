@@ -1,11 +1,11 @@
 {% extends "admin/login.html" %}
+{% load i18n static %}
 
 {% block content %}
-<div style="background-color: #e1f5fe; color: #01579b; padding: 12px; border: 1px solid #b3e5fc; border-radius: 4px; margin-bottom: 20px; text-align: center; font-family: sans-serif;">
-    <strong>🔑 演示账号提示</strong><br>
-    账号：<code style="background: #fff; padding: 2px 5px;">admin</code> |
-    密码：<code style="background: #fff; padding: 2px 5px;">woc7014admin</code>
+<div style="background-color: #fff3cd; color: #856404; padding: 15px; border: 1px solid #ffeeba; border-radius: 4px; margin-bottom: 20px; font-weight: bold; text-align: center; border-left: 5px solid #ffc107;">
+    🔑 管理员演示账号：<br>
+    <span style="color: #000;">账号：</span> <code style="background: #fff; padding: 2px 4px; border: 1px solid #ccc;">admin</code>
+    <span style="margin-left: 15px; color: #000;">密码：</span> <code style="background: #fff; padding: 2px 4px; border: 1px solid #ccc;">woc7014admin</code>
 </div>
-
 {{ block.super }}
 {% endblock %}
