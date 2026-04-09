@@ -1,0 +1,137 @@
+/* reviews/static/reviews/css/style.css */
+
+/* General Page Style */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #333;
+}
+
+h1 {
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+}
+
+.meta {
+    color: #888;
+    font-size: 0.9em;
+    margin-bottom: 20px;
+}
+
+.content {
+    margin-top: 20px;
+    font-size: 1.1em;
+    white-space: pre-line;
+}
+
+/* Voting Section */
+.vote-actions {
+    margin: 30px 0;
+    display: flex;
+    gap: 12px;
+}
+
+.vote-btn {
+    padding: 10px 18px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.vote-btn:hover {
+    background: #f8f9fa;
+    border-color: #bbb;
+    transform: translateY(-1px);
+}
+
+/* Comment Section */
+.comment-area {
+    margin-top: 40px;
+    border-top: 2px solid #f0f0f0;
+    padding-top: 30px;
+}
+
+.comment-item {
+    border-bottom: 1px solid #f9f9f9;
+    padding: 15px 0;
+}
+
+.comment-meta {
+    color: #666;
+    font-size: 0.85em;
+    margin-bottom: 8px;
+}
+
+.comment-meta strong {
+    color: #222;
+}
+
+.comment-text {
+    color: #444;
+}
+
+.comment-form {
+    background: #fcfcfc;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    margin-top: 30px;
+}
+
+.comment-form h4 {
+    margin-top: 0;
+}
+
+.comment-form input,
+.comment-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.comment-form textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.comment-form button {
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
