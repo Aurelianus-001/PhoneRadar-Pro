@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-your-key-here')
 DEBUG = True
-ALLOWED_HOSTS = ['*'] # 开发环境允许所有主机
+ALLOWED_HOSTS = ['*']  # 开发环境允许所有主机
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,7 +37,7 @@ ROOT_URLCONF = 'phoneradar_pro.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'], # 关键：指向根目录 templates
+        'DIRS': [BASE_DIR / 'templates'],  # 关键：指向根目录 templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,7 +64,11 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [BASE_DIR / 'static']  # 使用 Path 风格
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 登录/登出重定向
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

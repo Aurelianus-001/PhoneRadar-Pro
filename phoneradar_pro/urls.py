@@ -1,7 +1,10 @@
 from django.contrib import admin
 from django.urls import path, include
+from PhoneReview.views import RegisterView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('PhoneReview.urls')), # 把所有空的路径都交给 PhoneReview 处理
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('', include('PhoneReview.urls')),
 ]
