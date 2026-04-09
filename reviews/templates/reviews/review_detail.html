@@ -5,44 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ review.title }} - Phone Radar Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'reviews/css/style.css' %}">
+    <style>
+        /* 这里添加一点局部样式，确保详情页内容不会太宽 */
+        .detail-container { max-width: 800px; margin: 0 auto; padding: 20px; }
+        .navbar-brand img { margin-right: 10px; }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="logo-wrapper">
-            <a href="{% url 'review_list' %}">
-                <img src="{% static 'reviews/images/logo.png' %}" alt="Phone Radar Pro Logo" width="100">
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand font-monospace d-flex align-items-center" href="{% url 'review_list' %}">
+                <img src="{% static 'reviews/images/logo.png' %}" alt="Logo" width="30" height="30">
+                PhoneRadar_Pro
             </a>
         </div>
+    </nav>
 
-        <h1>{{ review.title }}</h1>
-        <p class="meta">
+    <div class="container bg-white shadow-sm rounded detail-container">
+        <h1 class="display-6 fw-bold text-dark">{{ review.title }}</h1>
+        <p class="meta text-muted border-bottom pb-3">
             By <strong>{{ review.author.username }}</strong> |
             Published: {{ review.created_at|date:"M d, Y" }} |
-            Rating: <span style="color: #f39c12;">★ {{ review.rating }} / 5</span>
+            Rating: <span style="color: #f39c12;">★ {{ review.rating }}/5</span>
         </p>
 
-        <div class="content">
+        <div class="content my-4" style="font-size: 1.1rem; line-height: 1.8;">
             {{ review.content|linebreaks }}
         </div>
 
-        <div class="vote-actions">
-            <a href="{% url 'review_vote' review.slug 'like' %}" class="vote-btn">
+        <div class="vote-actions d-flex gap-2 my-5">
+            <a href="{% url 'review_vote' review.slug 'like' %}" class="btn btn-outline-primary">
                 👍 Like ({{ review.likes }})
             </a>
-            <a href="{% url 'review_vote' review.slug 'dislike' %}" class="vote-btn">
+            <a href="{% url 'review_vote' review.slug 'dislike' %}" class="btn btn-outline-secondary">
                 👎 Dislike ({{ review.dislikes }})
             </a>
         </div>
 
-        <a href="{% url 'review_list' %}" class="back-link">← Back to Review List</a>
+        <hr>
+        <a href="{% url 'review_list' %}" class="text-decoration-none">← Back to Review List</a>
 
-        <div class="comment-area">
-            <h3>User Comments ({{ review.comments.count }})</h3>
+        <div class="comment-area mt-5">
+            <h3 class="h4 mb-4">User Comments ({{ review.comments.count }})</h3>
 
             {% for comment in review.comments.all %}
-                <div class="comment-item">
-                    <div class="comment-meta">
+                <div class="comment-item p-3 mb-3 bg-light rounded border-start border-4 border-primary">
+                    <div class="comment-meta small text-muted mb-2">
                         <strong>{{ comment.user_name }}</strong> &bull; {{ comment.created_at|date:"M d, Y H:i" }}
                     </div>
                     <div class="comment-text">
@@ -50,19 +61,25 @@
                     </div>
                 </div>
             {% empty %}
-                <p style="color: #999;">No comments yet. Be the first to share your thoughts!</p>
+                <p class="text-muted italic">No comments yet. Be the first to share your thoughts!</p>
             {% endfor %}
 
-            <div class="comment-form">
-                <h4>Leave a Comment</h4>
+            <div class="comment-form mt-5 p-4 bg-dark text-white rounded">
+                <h4 class="h5 mb-3">Leave a Comment</h4>
                 <form method="post" action="{% url 'review_detail' review.slug %}">
                     {% csrf_token %}
-                    <input type="text" name="user_name" placeholder="Your Nickname (Optional)">
-                    <textarea name="text" placeholder="Share your thoughts here... (Required)" required></textarea>
-                    <button type="submit">Post Comment</button>
+                    <div class="mb-3">
+                        <input type="text" name="user_name" class="form-control" placeholder="Your Nickname (Optional)">
+                    </div>
+                    <div class="mb-3">
+                        <textarea name="text" class="form-control" rows="3" placeholder="Share your thoughts here... (Required)" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Post Comment</button>
                 </form>
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
