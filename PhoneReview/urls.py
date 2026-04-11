@@ -5,7 +5,7 @@ urlpatterns = [
     # 添加手机型号（必须放在 <slug:slug>/ 之前）
     path('add-phone/', views.AddPhoneView.as_view(), name='add_phone'),
     # 添加测评文章（必须放在 <slug:slug>/ 之前）
-    path('add-review_detail.html/', views.AddReviewView.as_view(), name='add_review'),
+    path('add-review/', views.AddReviewView.as_view(), name='add_review'),
 
     # 1. 首页：使用类视图 ReviewListView
     path('', views.ReviewListView.as_view(), name='review_list'),
