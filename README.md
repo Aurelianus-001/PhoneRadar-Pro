@@ -1,8 +1,8 @@
 # 📱 PhoneRadar Pro — Phone & Game Review Platform
 
-[![Python Version](README.assets/python-3.10%2B-blue)](https://www.python.org/)
-[![Django Version](README.assets/django-6.0.3-green)](https://www.djangoproject.com/)
-[![License](README.assets/license-MIT-orange)](LICENSE)
+[![Python Version](README.assets/python-3-20260411175611016.10%2B-blue)](https://www.python.org/)
+[![Django Version](README.assets/django-6.0-20260411175610843.3-green)](https://www.djangoproject.com/)
+[![License](README.assets/license-MIT-orange-20260411175611020)](LICENSE)
 
 **PhoneRadar Pro** is a Django-based content management system that integrates **phone reviews** and **game reviews**. It features user authentication, many-to-many relationships, dynamic front-end rendering, and a fully customized admin panel.
 
@@ -46,7 +46,10 @@ Demo link:https://phone-radar-pro.aurelianus.online/
 
 ---
 
-## 📦 Quick Start (Local)
+## 📦 Quick Stgit add screenshots/
+git add README.md
+git commit -m "Add screenshots for assignment submission"
+git push origin mainart (Local)
 
 ### 1. Clone the repository
 ```bash
@@ -184,15 +187,21 @@ This hint appears only when `DEBUG=True` and does not affect production security
 
 - **Phone review homepage** – list of reviews with author, rating, related phones
 
-  ![首页](README.assets/首页.png)
+  ```
+  ![Phone Review List](screenshots/phone_review_list.png)
+  ```
 
 - **Game list page** – covers, names, ratings, descriptions
 
-  ![games](README.assets/games.png)
+  ```
+  ![Game List](screenshots/game_list.png)
+  ```
 
 - **Admin login page** – with credential hint
 
-  ![admin](README.assets/admin.png)
+  ```
+  ![Admin Login](screenshots/admin_login_hint.png)
+  ```
 
 
 
