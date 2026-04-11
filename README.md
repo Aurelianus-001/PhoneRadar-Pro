@@ -1,8 +1,8 @@
 # 📱 PhoneRadar Pro — Phone & Game Review Platform
 
-[![Python Version](README.assets/python-3-20260411175611016.10%2B-blue)](https://www.python.org/)
-[![Django Version](README.assets/django-6.0-20260411175610843.3-green)](https://www.djangoproject.com/)
-[![License](README.assets/license-MIT-orange-20260411175611020)](LICENSE)
+[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+[![Django Version](https://img.shields.io/badge/django-6.0.3-green)](https://www.djangoproject.com/)
+[![License](https://img.shields.io/badge/license-MIT-orange)](LICENSE)
 
 **PhoneRadar Pro** is a Django-based content management system that integrates **phone reviews** and **game reviews**. It features user authentication, many-to-many relationships, dynamic front-end rendering, and a fully customized admin panel.
 
