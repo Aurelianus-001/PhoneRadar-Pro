@@ -1,67 +1,206 @@
-# 📱 PhoneRadar Pro (手机雷达专业版)
+# 📱 PhoneRadar Pro — Phone & Game Review Platform
 
-[![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
-[![Django Version](https://img.shields.io/badge/django-5.0%2B-green)](https://www.djangoproject.com/)
-[![License](https://img.shields.io/badge/license-MIT-orange)](LICENSE)
+[![Python Version](README.assets/python-3.10%2B-blue)](https://www.python.org/)
+[![Django Version](README.assets/django-6.0.3-green)](https://www.djangoproject.com/)
+[![License](README.assets/license-MIT-orange)](LICENSE)
 
-**PhoneRadar Pro** 是一个基于 Django 开发的专业手机评测内容管理系统。它旨在为数码爱好者提供一个结构化、易扩展的硬件评价平台。
-
----
-
-## 🚀 核心功能
-
-* **多维度建模**：采用 Django ORM 实现品牌 (Brand)、型号 (PhoneModel) 与测评 (Review) 的深层关联。
-* **工业级后台**：深度定制的 Admin 管理界面，支持搜索、多重过滤及图片/链接管理。
-* **动态渲染**：通过 MVT 架构实现测评内容的自动化实时展示。
-* **SEO 友好**：内置自动生成 Slug 功能，确保每一篇测评都有美观且利于搜索的 URL。
-* **对比评测**：支持一篇文章关联多个机型，满足对比横评场景。
+**PhoneRadar Pro** is a Django-based content management system that integrates **phone reviews** and **game reviews**. It features user authentication, many-to-many relationships, dynamic front-end rendering, and a fully customized admin panel.
 
 ---
 
-## 🛠️ 技术栈
+## 🚀 Key Features
 
-* **后端**: Python 3.10+ / Django 5.0+
-* **数据库**: SQLite 3 (开发环境)
-* **版本控制**: Git / GitHub
-* **前端**: 原生 HTML5 / CSS3 (支持响应式布局)
+### 📱 Phone Review Module (`PhoneReview`)
+- Three‑layer data model: Brand, PhoneModel, Review
+- **Many‑to‑many** relationship between reviews and phone models (one review can cover multiple phones)
+- Auto‑generated SEO‑friendly slugs
+- User registration / login / logout
+- Only logged‑in users can **add phone models** and **write reviews**
+- Review detail page supports **comments** and **like/dislike** buttons
+- Fully English interface with a unified top bar (logo, login status)
+
+### 🎮 Game Review Module (`games`)
+- Game model: name, description, release date, rating (0.0–10.0), cover image URL
+- Class‑based `ListView` to display the game list
+- Shows cover images and rating badges
+
+### 🔧 Highlights
+- **Custom admin login page**: displays demo credentials (`admin` / `woc7014admin`) for easy presentation
+- **Unified front‑end style**: all pages inherit `base.html` with the same top bar and CSS
+- **Responsive design**: works on desktop and mobile
+- **Full migration history**: supports PostgreSQL / SQLite
 
 ---
 
-## 📦 快速开始
+## 🛠️ Tech Stack
 
-如果你想在本地运行这个项目，请按照以下步骤操作：
+| Layer           | Technology                             |
+| --------------- | -------------------------------------- |
+| Backend         | Python 3.13, Django 6.0.3              |
+| Database        | PostgreSQL (production) / SQLite (dev) |
+| Frontend        | HTML5, CSS3 (custom styles)            |
+| Static files    | WhiteNoise (production)                |
+| Version control | Git / GitHub                           |
 
-### 1. 克隆项目
+---
 
-git clone [https://github.com/Aurelianus-001/PhoneRadar-Pro.git](https://github.com/Aurelianus-001/PhoneRadar-Pro.git)
+## 📦 Quick Start (Local)
 
+### 1. Clone the repository
+```bash
+git clone https://github.com/Aurelianus-001/PhoneRadar-Pro.git
 cd PhoneRadar-Pro
-### 2. 创建虚拟环境并安装依赖
-Bash
+```
+
+
+
+### 2. Create and activate a virtual environment
+
+bash
+
+```
 python -m venv .venv
-source .venv/bin/activate  # Windows 使用 .venv\Scripts\activate
-pip install django
-### 3. 初始化数据库
-Bash
+source .venv/bin/activate      # macOS/Linux
+# .venv\Scripts\activate       # Windows
+```
+
+
+
+### 3. Install dependencies
+
+bash
+
+```
+pip install -r requirements.txt
+```
+
+
+
+> If you don’t have a `requirements.txt`, at least install: `django`, `psycopg2-binary`, `dj-database-url`, `python-dotenv`, `whitenoise`
+
+### 4. Run migrations
+
+bash
+
+```
 python manage.py makemigrations
 python manage.py migrate
-### 4. 创建管理员并启动
-Bash
+```
+
+
+
+### 5. Create a superuser (for admin access)
+
+bash
+
+```
 python manage.py createsuperuser
+```
+
+
+
+Follow the prompts – you can use `admin` / `woc7014admin` as shown on the admin login page.
+
+### 6. Start the development server
+
+bash
+
+```
 python manage.py runserver
-访问 http://127.0.0.1:8000/admin 录入数据，随后在 http://127.0.0.1:8000/ 查看效果。
+```
 
-### 📂 项目结构预览
-Plaintext
+
+
+- Homepage (phone reviews): http://127.0.0.1:8000/
+- Game reviews list: http://127.0.0.1:8000/games/
+- Admin panel: http://127.0.0.1:8000/admin/ (credentials hint is displayed)
+
+### 7. (Optional) Load sample game data
+
+bash
+
+```
+python import_games.py
+```
+
+
+
+------
+
+## 📂 Project Structure
+
+text
+
+```
 phoneradar_pro/
-├── phoneradar_pro/      # 项目配置
-├── reviews/             # 测评核心模块
-│   ├── models.py       # 数据库模型 (核心地基)
-│   ├── views.py        # 业务逻辑 (大脑)
-│   ├── urls.py         # 路由配置 (门牌号)
-│   └── templates/      # 网页模板 (脸面)
-└── manage.py           # 项目管理入口
-### 🤝 贡献与反馈
-欢迎提交 Issue 或 Pull Request 来完善这个项目。如果你觉得这个项目对你有帮助，请点一个 Star ⭐！
+├── phoneradar_pro/          # Project settings
+│   ├── settings.py          # Global config (static, auth redirects)
+│   ├── urls.py              # Main routing (admin, accounts, index, games, empty)
+│   └── wsgi.py
+├── PhoneReview/             # Phone reviews app
+│   ├── models.py            # Brand, PhoneModel, Review, Comment
+│   ├── views.py             # ListView, DetailView, CreateView, comment/like logic
+│   ├── urls.py              # add-phone/, add-review/, <slug>/ etc.
+│   ├── forms.py             # PhoneModelForm, ReviewForm
+│   └── templates/reviews/   # review_list.html, review_detail.html, add_*.html
+├── games/                   # Game reviews app
+│   ├── models.py            # Game (name, description, release_date, rating, image_url)
+│   ├── views.py             # GameReviewListView
+│   ├── urls.py              # /games/ route
+│   └── templates/games/     # game_list.html
+├── main/                    # Welcome page (index/)
+│   └── views.py             # Renders the welcome page
+├── static/                  # Static files
+│   ├── css/style.css        # Global styles (comments, game cards, etc.)
+│   └── images/logo.png      # Site logo
+├── templates/               # Global templates
+│   ├── base.html            # Top bar (logo, login status)
+│   ├── registration/        # login.html, register.html
+│   └── main/index.html      # Welcome page template
+├── staticfiles/             # collectstatic output (production)
+├── manage.py
+└── README.md
+```
 
-Author: Aurelianus-001
+
+
+------
+
+## 🔐 Admin Login Hint
+
+To make grading easier, the `/admin` login page shows a custom notice:
+
+> 🔑 Demo credentials:
+> Username: `admin`
+> Password: `woc7014admin`
+
+This hint appears only when `DEBUG=True` and does not affect production security.
+
+------
+
+## 📸 Screenshots (for assignment submission)
+
+- **Phone review homepage** – list of reviews with author, rating, related phones
+- **Game list page** – covers, names, ratings, descriptions
+- **Admin login page** – with credential hint
+
+Please upload screenshots to Spectrum as required.
+
+------
+
+## 🤝 Contribution & License
+
+Issues and pull requests are welcome. This project is open‑sourced under the MIT license.
+
+**Author:** Aurelianus-001
+
+**Contact:** 1807129991@qq.com
+
+**Course:** WOC7014 FRAMEWORK-BASED SOFTWARE DESIGN AND DEVELOPMENT
+
+
+
+
+
+
+
