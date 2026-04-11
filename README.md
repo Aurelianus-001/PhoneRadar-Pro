@@ -6,6 +6,8 @@
 
 **PhoneRadar Pro** is a Django-based content management system that integrates **phone reviews** and **game reviews**. It features user authentication, many-to-many relationships, dynamic front-end rendering, and a fully customized admin panel.
 
+Demo link:https://phone-radar-pro.aurelianus.online/
+
 ---
 
 ## 🚀 Key Features
@@ -178,13 +180,21 @@ This hint appears only when `DEBUG=True` and does not affect production security
 
 ------
 
-## 📸 Screenshots (for assignment submission)
+## 📸 Screenshots 
 
 - **Phone review homepage** – list of reviews with author, rating, related phones
+
+  ![首页](README.assets/首页.png)
+
 - **Game list page** – covers, names, ratings, descriptions
+
+  ![games](README.assets/games.png)
+
 - **Admin login page** – with credential hint
 
-Please upload screenshots to Spectrum as required.
+  ![admin](README.assets/admin.png)
+
+
 
 ------
 
