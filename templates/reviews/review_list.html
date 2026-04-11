@@ -2,15 +2,15 @@
 {% load static %}
 
 {% block content %}
-<h2>最新手机测评</h2>
+<h2>Latest Mobile Phone Review</h2>
 {% if reviews %}
     <div class="review-list">
         {% for review in reviews %}
             <div class="review-card">
                 <h3><a href="{% url 'review_detail' review.slug %}">{{ review.title }}</a></h3>
-                <p>作者：{{ review.author.username }} | 评分：{{ review.rating }}/5 | 日期：{{ review.date_published|date:"Y-m-d" }}</p>
+                <p>Author：{{ review.author.username }} | Rating：{{ review.rating }}/5 | Date：{{ review.date_published|date:"Y-m-d" }}</p>
                 <p>{{ review.content|truncatewords:30 }}</p>
-                <p>相关手机：{% for phone in review.phone_models.all %}{{ phone.brand.name }} {{ phone.model_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                <p>Related phones：{% for phone in review.phone_models.all %}{{ phone.brand.name }} {{ phone.model_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                 <hr>
             </div>
         {% endfor %}

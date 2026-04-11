@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhoneRadar - 手机测评</title>
+    <title>PhoneRadar - Phone Review</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
@@ -12,21 +12,21 @@
         <header class="site-header">
             <div class="logo-area">
                 <img src="{% static 'images/logo.png' %}" alt="PhoneRadar Logo">
-                <h1>📱 PhoneRadar 手机雷达</h1>
+                <h1>📱 PhoneRadar </h1>
             </div>
             <nav>
-                <a href="{% url 'review_list' %}">首页</a>
+                <a href="{% url 'review_list' %}">Home</a>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'add_review' %}">✍️ 写新测评</a>
-                    <a href="{% url 'add_phone' %}">📱 添加手机型号</a>
+                    <a href="{% url 'add_review' %}">✍️ Write a new assessment.</a>
+                    <a href="{% url 'add_phone' %}">📱 Add mobile phone model</a>
                     <span>欢迎，{{ user.username }}！</span>
                     <form method="post" action="{% url 'logout' %}" style="display:inline;">
                         {% csrf_token %}
-                        <button type="submit">🚪 登出</button>
+                        <button type="submit">🚪 Logout</button>
                     </form>
                 {% else %}
-                    <a href="{% url 'login' %}">🔐 登录</a>
-                    <a href="{% url 'register' %}">📝 注册</a>
+                    <a href="{% url 'login' %}">🔐 Login</a>
+                    <a href="{% url 'register' %}">📝 Register</a>
                 {% endif %}
             </nav>
         </header>
@@ -35,7 +35,7 @@
             {% endblock %}
         </main>
         <footer>
-            <p>&copy; 2026 PhoneRadar - 你的手机测评专家</p>
+            <p>&copy; 2026 PhoneRadar - Your mobile phone evaluation expert</p>
         </footer>
     </div>
 </body>
