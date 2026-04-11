@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',          # 必须有
     'PhoneReview',   # 必须有
+    'games',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>All Game Reviews</h2>
+<div class="game-list">
+    {% for game in games %}
+        <div class="game-item">
+            <img src="{{ game.image_url }}" alt="{{ game.name }}" style="width: 100px; height: auto; float: left; margin-right: 15px;">
+            <div>
+                <h3>{{ game.name }}</h3>
+                <p><strong>Rating:</strong> {{ game.rating }}/10</p>
+                <p><strong>Release Date:</strong> {{ game.release_date }}</p>
+                <p>{{ game.description|truncatewords:30 }}</p>
+            </div>
+            <div style="clear: both;"></div>
+            <hr>
+        </div>
+    {% empty %}
+        <p>No games found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

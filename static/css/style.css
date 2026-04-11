@@ -175,3 +175,11 @@ textarea.form-control {
 .dislike-btn:hover {
     background-color: #c82333;
 }
+.game-item {
+    margin-bottom: 20px;
+    overflow: auto;
+}
+.game-item img {
+    max-width: 100px;
+    border-radius: 8px;
+}

@@ -7,5 +7,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', RegisterView.as_view(), name='register'),
     path('index/', include('main.urls')),        # 确保这一行在下面一行之前
+    path('games/', include('games.urls')),   # 新增
     path('', include('PhoneReview.urls')),       # 通配路由，放在最后
 ]
