@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            {% if game.image_url %}
+                <img src="{{ game.image_url }}" class="img-fluid rounded" alt="{{ game.name }}">
+            {% else %}
+                <div class="bg-light text-center p-5 rounded">No image</div>
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h2>{{ game.name }}</h2>
+            <p><strong>Platform:</strong> {{ game.platform.name }}</p>
+            <p><strong>Release Date:</strong> {{ game.release_date }}</p>
+            <p><strong>Rating:</strong> {{ game.rating }}/10</p>
+            <p><strong>Tags:</strong>
+                {% for tag in game.tags.all %}
+                    <span class="badge bg-secondary">{{ tag.name }}</span>
+                {% empty %}
+                    <span class="text-muted">No tags</span>
+                {% endfor %}
+            </p>
+            <p><strong>Description:</strong> {{ game.description }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

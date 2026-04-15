@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Game Tags</h2>
+<div class="row">
+    {% for tag in tags %}
+    <div class="col-md-3 mb-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">{{ tag.name }}</h5>
+                <p class="card-text">{{ tag.games.count }} game(s)</p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No tags found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

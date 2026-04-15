@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card mb-4">
+        <div class="row g-0">
+            <div class="col-md-4">
+                {% if phonemodel.image_url %}
+                <img src="{{ phonemodel.image_url }}" class="img-fluid rounded-start" alt="{{ phonemodel.model_name }}" style="height: 300px; object-fit: cover; width: 100%;">
+                {% else %}
+                <div class="bg-light text-center p-5">No image</div>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 class="card-title">{{ phonemodel.brand.name }} {{ phonemodel.model_name }}</h2>
+                    <p><strong>Launch Date:</strong> {{ phonemodel.launch_date }}</p>
+                    <p><strong>Platform:</strong> {{ phonemodel.platform }}</p>
+                    {% if phonemodel.newslink %}
+                        <p><strong>News / External Link:</strong> <a href="{{ phonemodel.newslink }}" target="_blank">{{ phonemodel.newslink }}</a></p>
+                    {% else %}
+                        <p><strong>News / External Link:</strong> Not provided</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4>Reviews for this model</h4>
+    <div class="row">
+        {% for review in phonemodel.reviews.all %}
+        <div class="col-md-6 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'review_detail' review.slug %}">{{ review.title }}</a></h5>
+                    <p class="card-text">{{ review.content|truncatewords:30 }}</p>
+                    <p class="card-text"><small>Rating: {{ review.rating }}/5 | By: {{ review.author.username }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No reviews for this model yet.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

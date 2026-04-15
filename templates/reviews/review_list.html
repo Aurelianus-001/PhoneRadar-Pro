@@ -2,20 +2,34 @@
 {% load static %}
 
 {% block content %}
-<h2>Latest Mobile Phone Review</h2>
-{% if reviews %}
-    <div class="review-list">
-        {% for review in reviews %}
-            <div class="review-card">
-                <h3><a href="{% url 'review_detail' review.slug %}">{{ review.title }}</a></h3>
-                <p>Author：{{ review.author.username }} | Rating：{{ review.rating }}/5 | Date：{{ review.date_published|date:"Y-m-d" }}</p>
-                <p>{{ review.content|truncatewords:30 }}</p>
-                <p>Related phones：{% for phone in review.phone_models.all %}{{ phone.brand.name }} {{ phone.model_name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-                <hr>
+<h2 class="mt-3 mb-4">Latest Mobile Phone Reviews</h2>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for review in reviews %}
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'review_detail' review.slug %}" class="text-decoration-none">{{ review.title }}</a>
+                </h5>
+                <p class="card-text">
+                    <strong>Author:</strong> {{ review.author.username }}<br>
+                    <strong>Rating:</strong> {{ review.rating }}/5<br>
+                    <strong>Date:</strong> {{ review.date_published|date:"Y-m-d" }}
+                </p>
+                <p class="card-text">{{ review.content|truncatewords:30 }}</p>
+                <p class="card-text">
+                    <strong>Related phones:</strong><br>
+                    {% for phone in review.phone_models.all %}
+                        {{ phone.brand.name }} {{ phone.model_name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
             </div>
-        {% endfor %}
+        </div>
     </div>
-{% else %}
-    <p>暂无测评文章。</p>
-{% endif %}
+    {% empty %}
+    <div class="col-12">
+        <p>No reviews yet.</p>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

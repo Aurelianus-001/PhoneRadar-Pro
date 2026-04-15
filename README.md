@@ -188,19 +188,19 @@ This hint appears only when `DEBUG=True` and does not affect production security
 - **Phone review homepage** – list of reviews with author, rating, related phones
 
   ```
-  ![Phone Review List](screenshots/phone_review_list.png)
+  ![Phone Review List](https://raw.githubusercontent.com/Aurelianus-001/PhoneRadar-pro/main/screenshots/phone_review_list.png)
   ```
 
 - **Game list page** – covers, names, ratings, descriptions
 
   ```
-  ![Game List](screenshots/game_list.png)
+  ![Game List](https://raw.githubusercontent.com/Aurelianus-001/PhoneRadar-pro/main/screenshots/game_list.png)
   ```
 
 - **Admin login page** – with credential hint
 
   ```
-  ![Admin Login](screenshots/admin_login_hint.png)
+  ![Admin Login](https://raw.githubusercontent.com/Aurelianus-001/PhoneRadar-pro/main/screenshots/admin_login_hint.png)
   ```
 
 

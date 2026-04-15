@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block sidebar %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        Phone Module
+    </div>
+    <div class="card-body p-0">
+        <ul class="nav flex-column sidebar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'brand_list' %}">📱 Brand List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'all_models' %}">📱 All Phone Models</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'review_list' %}">📝 Reviews</a>
+            </li>
+        </ul>
+    </div>
+</div>
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+<h2 class="mt-3 mb-4">Mobile Phone Brands</h2>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for brand in brands %}
+    <div class="col">
+        <div class="card h-100">
+            {% if brand.logo_url %}
+            <img src="{{ brand.logo_url }}" class="card-img-top" alt="{{ brand.name }}" style="height: 150px; object-fit: contain; padding: 10px;">
+            {% else %}
+            <div class="card-img-top bg-light text-center p-3">No logo</div>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ brand.name }}</h5>
+                <p class="card-text"><strong>Origin:</strong> {{ brand.origin }}</p>
+                <p class="card-text"><strong>Manufacturing since:</strong> {{ brand.manufacturing_since }}</p>
+                <a href="{% url 'brand_models' brand.id %}" class="btn btn-primary btn-sm">View Models</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No brands available.</p>
+    {% endfor %}
+</div>
+{% endblock %}

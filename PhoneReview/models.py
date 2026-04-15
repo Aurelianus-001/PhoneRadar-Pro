@@ -26,6 +26,8 @@ class PhoneModel(models.Model):
     platform = models.CharField("Platform", max_length=50,
                                 choices=[('iOS', 'iOS'), ('Android', 'Android'),
                                          ('Others', 'Others')])  # 改名：对齐老师的 platform
+    newslink = models.URLField("News Link", blank=True, help_text="External link for news or reviews")  # 新增
+    image_url = models.URLField("Image URL", blank=True, help_text="手机型号图片")  # 新增：手机型号图片
 
     class Meta:
         verbose_name = "Phone Model"
