@@ -11,7 +11,7 @@
         .banner {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 72px 20px;  /* 增加至原1.2倍 */
+            padding: 72px 20px;
             text-align: center;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -56,13 +56,11 @@
 </head>
 <body>
     <div class="container mt-3">
-        <!-- 横幅 -->
         <div class="banner">
             <h1>🎮 Game & Phone Reviews</h1>
             <p>Discover the latest reviews of popular games and mobile phones</p>
         </div>
 
-        <!-- 操作栏 -->
         <div class="d-flex justify-content-end mb-3">
             <div class="btn-group" role="group">
                 {% if user.is_authenticated %}
@@ -76,11 +74,10 @@
                     <a href="{% url 'register' %}" class="btn btn-secondary">📝 Register</a>
                 {% endif %}
 
-                <!-- 动态添加按钮 -->
                 {% if '/models/' in request.path %}
                     <a href="{% url 'add_review' %}" class="btn btn-success">✍️ Add Review</a>
                 {% elif '/brands/' in request.path %}
-                    <a href="{% url 'add_phone' %}" class="btn btn-success"> Add Phone</a>
+                    <a href="{% url 'add_phone' %}" class="btn btn-success">📱 Add Phone</a>
                 {% elif '/games/' in request.path %}
                     <a href="#" class="btn btn-success" onclick="alert('Add Game feature coming soon')">🎮 Add Game</a>
                 {% elif '/reviews/' in request.path %}
@@ -90,9 +87,7 @@
         </div>
 
         <div class="row">
-            <!-- 侧边栏（宽度变宽） -->
             <div class="col-md-3 sidebar-wrapper">
-                <!-- 固定菜单 -->
                 <div class="card sidebar-card">
                     <div class="card-header bg-secondary text-white">
                         Main Menu
@@ -112,7 +107,6 @@
                     </div>
                 </div>
 
-                <!-- 动态侧边栏 -->
                 {% if current_module == 'phone' %}
                 <div class="card sidebar-card">
                     <div class="card-header bg-secondary text-white">
@@ -152,7 +146,6 @@
                 </div>
                 {% endif %}
 
-                <!-- Info 卡片 -->
                 <div class="card mt-3">
                     <div class="card-header bg-secondary text-white">
                         Info
@@ -164,9 +157,8 @@
                 </div>
             </div>
 
-            <!-- 主要内容区 -->
             <div class="col-md-9">
-                <main>
+                <main class="bg-white p-3 rounded border">
                     {% block content %}
                     {% endblock %}
                 </main>

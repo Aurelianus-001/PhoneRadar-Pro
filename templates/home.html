@@ -2,20 +2,37 @@
 {% load static %}
 
 {% block content %}
-<div class="text-center mt-5">
-    <h1>Welcome to PhoneRadar</h1>
-    <p class="lead">Your ultimate guide to the latest mobile phones and games.</p>
-    <hr>
-    <div class="row mt-5">
-        <div class="col-md-6">
-            <h3>📱 Mobile Phone Reviews</h3>
-            <p>Explore detailed reviews of the latest smartphones, compare brands, and find the perfect device.</p>
-            <a href="{% url 'brand_list' %}" class="btn btn-primary">Browse Phones</a>
-        </div>
-        <div class="col-md-6">
-            <h3>🎮 Game Reviews</h3>
-            <p>Discover in-depth game reviews, ratings, and tags to find your next favorite game.</p>
-            <a href="{% url 'game_list' %}" class="btn btn-success">Browse Games</a>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-0">Welcome to PhoneRadar</h4>
+            </div>
+            <div class="card-body">
+                <h3>Your ultimate source for phone and game reviews</h3>
+                <p>Explore comprehensive reviews of the latest mobile phones and games. Our expert team provides in-depth analysis, ratings, and comparisons to help you make informed decisions.</p>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h5>📱 Phone Reviews</h5>
+                                <p>Browse all phone brands, compare models, and read detailed reviews with ratings and user comments.</p>
+                                <a href="{% url 'brand_list' %}" class="btn btn-primary">View Phones</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <h5>🎮 Game Reviews</h5>
+                                <p>Discover new games, check ratings, and filter by tags to find your next favorite game.</p>
+                                <a href="{% url 'game_list' %}" class="btn btn-primary">View Games</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
