@@ -6,7 +6,7 @@
 
 **PhoneRadar Pro** is a Django-based content management system that integrates **phone reviews** and **game reviews**. It features user authentication, many-to-many relationships, dynamic front-end rendering, and a fully customized admin panel.
 
-Demo link:https://phone-radar-pro.aurelianus.online/
+**Demo link:** https://phone-radar-pro.aurelianus.online/
 
 ---
 
@@ -20,17 +20,31 @@ Demo link:https://phone-radar-pro.aurelianus.online/
 - Only logged‑in users can **add phone models** and **write reviews**
 - Review detail page supports **comments** and **like/dislike** buttons
 - Fully English interface with a unified top bar (logo, login status)
+- **Phone model list page** displays each model with a left‑side image and right‑side information
+- **Phone model detail page** shows model info, external news link, and associated reviews
+- **Brand logos** are stored locally for reliable display
 
 ### 🎮 Game Review Module (`games`)
 - Game model: name, description, release date, rating (0.0–10.0), cover image URL
 - Class‑based `ListView` to display the game list
 - Shows cover images and rating badges
+- **Tag filtering**: click on a tag in the sidebar to filter games by that tag
+- **Game detail page** displays platform, tags, and full description
+
+### 🧭 Dynamic Sidebar (Three Columns)
+- **Main Menu** (fixed): HOME, Phone Reviews, Game Reviews – highlights current module
+- **Navigation** (dynamic):  
+  - In phone module: shows Mobile Phone Brands, All Phone Models, Phone Reviews  
+  - In game module: shows Tags (clickable) with list of all tags; active tag highlighted
+- **Info**: always shows welcome message and copyright
 
 ### 🔧 Highlights
 - **Custom admin login page**: displays demo credentials (`admin` / `woc7014admin`) for easy presentation
-- **Unified front‑end style**: all pages inherit `base.html` with the same top bar and CSS
+- **Unified front‑end style**: all pages inherit `base.html` with the same sidebar, banner, and CSS
 - **Responsive design**: works on desktop and mobile
 - **Full migration history**: supports PostgreSQL / SQLite
+- **Action buttons** (Login/Register/Logout, Add Phone, Add Review, Add Game) are placed in the top‑right area below the banner, dynamically shown based on the current page
+- **English login/register pages** styled consistently with the rest of the site
 
 ---
 
@@ -40,24 +54,19 @@ Demo link:https://phone-radar-pro.aurelianus.online/
 | --------------- | -------------------------------------- |
 | Backend         | Python 3.13, Django 6.0.3              |
 | Database        | PostgreSQL (production) / SQLite (dev) |
-| Frontend        | HTML5, CSS3 (custom styles)            |
+| Frontend        | HTML5, CSS3, Bootstrap 5               |
 | Static files    | WhiteNoise (production)                |
 | Version control | Git / GitHub                           |
 
 ---
 
-## 📦 Quick Stgit add screenshots/
-git add README.md
-git commit -m "Add screenshots for assignment submission"
-git push origin mainart (Local)
+## 📦 Quick Start (Local)
 
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/Aurelianus-001/PhoneRadar-Pro.git
 cd PhoneRadar-Pro
 ```
-
-
 
 ### 2. Create and activate a virtual environment
 
@@ -116,7 +125,10 @@ python manage.py runserver
 
 
 
-- Homepage (phone reviews): http://127.0.0.1:8000/
+- Homepage (welcome): http://127.0.0.1:8000/
+- Phone brands list: http://127.0.0.1:8000/brands/
+- Phone models list: http://127.0.0.1:8000/models/
+- Phone reviews list: http://127.0.0.1:8000/reviews/
 - Game reviews list: http://127.0.0.1:8000/games/
 - Admin panel: http://127.0.0.1:8000/admin/ (credentials hint is displayed)
 
@@ -145,23 +157,25 @@ phoneradar_pro/
 ├── PhoneReview/             # Phone reviews app
 │   ├── models.py            # Brand, PhoneModel, Review, Comment
 │   ├── views.py             # ListView, DetailView, CreateView, comment/like logic
-│   ├── urls.py              # add-phone/, add-review/, <slug>/ etc.
+│   ├── urls.py              # add-phone/, add-review/, brands/, models/, reviews/, <slug>/ etc.
 │   ├── forms.py             # PhoneModelForm, ReviewForm
-│   └── templates/reviews/   # review_list.html, review_detail.html, add_*.html
+│   └── templates/reviews/   # brand_list.html, all_models.html, review_list.html, review_detail.html, etc.
 ├── games/                   # Game reviews app
-│   ├── models.py            # Game (name, description, release_date, rating, image_url)
-│   ├── views.py             # GameReviewListView
-│   ├── urls.py              # /games/ route
-│   └── templates/games/     # game_list.html
+│   ├── models.py            # Game, Platform, Tag
+│   ├── views.py             # GameReviewListView (with tag filtering), GameDetailView, TagListView
+│   ├── urls.py              # /games/, /games/tags/, /games/<slug>/
+│   └── templates/games/     # game_list.html, game_detail.html, tag_list.html
 ├── main/                    # Welcome page (index/)
 │   └── views.py             # Renders the welcome page
 ├── static/                  # Static files
-│   ├── css/style.css        # Global styles (comments, game cards, etc.)
-│   └── images/logo.png      # Site logo
+│   ├── css/style.css        # Global styles
+│   ├── images/logo.png      # Site logo
+│   └── images/brands/       # Brand logos (Apple, Samsung, Xiaomi, Huawei, Google, OnePlus)
 ├── templates/               # Global templates
-│   ├── base.html            # Top bar (logo, login status)
-│   ├── registration/        # login.html, register.html
-│   └── main/index.html      # Welcome page template
+│   ├── base.html            # Three‑column sidebar, banner, dynamic content
+│   ├── registration/        # login.html, register.html (English, consistent styling)
+│   ├── home.html            # Welcome page with introduction
+│   └── main/index.html      # Original index page (kept)
 ├── staticfiles/             # collectstatic output (production)
 ├── manage.py
 └── README.md
@@ -183,27 +197,14 @@ This hint appears only when `DEBUG=True` and does not affect production security
 
 ------
 
-## 📸 Screenshots 
+## 📸 Screenshots
 
 - **Phone review homepage** – list of reviews with author, rating, related phones
-
-  ```
-  ![Phone Review List](https://raw.githubusercontent.com/Aurelianus-001/PhoneRadar-pro/main/screenshots/phone_review_list.png)
-  ```
-
+  https://raw.githubusercontent.com/Aurelianus-001/PhoneRadar-Pro/main/screenshots/phone_review_list.png
 - **Game list page** – covers, names, ratings, descriptions
-
-  ```
-  ![Game List](https://raw.githubusercontent.com/Aurelianus-001/PhoneRadar-pro/main/screenshots/game_list.png)
-  ```
-
+  https://raw.githubusercontent.com/Aurelianus-001/PhoneRadar-Pro/main/screenshots/game_list.png
 - **Admin login page** – with credential hint
-
-  ```
-  ![Admin Login](https://raw.githubusercontent.com/Aurelianus-001/PhoneRadar-pro/main/screenshots/admin_login_hint.png)
-  ```
-
-
+  https://raw.githubusercontent.com/Aurelianus-001/PhoneRadar-Pro/main/screenshots/admin_login_hint.png
 
 ------
 
@@ -212,14 +213,5 @@ This hint appears only when `DEBUG=True` and does not affect production security
 Issues and pull requests are welcome. This project is open‑sourced under the MIT license.
 
 **Author:** Aurelianus-001
-
 **Contact:** 1807129991@qq.com
-
 **Course:** WOC7014 FRAMEWORK-BASED SOFTWARE DESIGN AND DEVELOPMENT
-
-
-
-
-
-
-
